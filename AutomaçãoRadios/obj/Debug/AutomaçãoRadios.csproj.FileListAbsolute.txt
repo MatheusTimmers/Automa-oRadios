@@ -1,0 +1,10 @@
+C:\Users\80400197\source\repos\AutomaçãoRadios\AutomaçãoRadios\bin\Debug\AutomaçãoRadios.exe.config
+C:\Users\80400197\source\repos\AutomaçãoRadios\AutomaçãoRadios\bin\Debug\AutomaçãoRadios.exe
+C:\Users\80400197\source\repos\AutomaçãoRadios\AutomaçãoRadios\bin\Debug\AutomaçãoRadios.pdb
+C:\Users\80400197\source\repos\AutomaçãoRadios\AutomaçãoRadios\bin\Debug\RsInstrument.dll
+C:\Users\80400197\source\repos\AutomaçãoRadios\AutomaçãoRadios\bin\Debug\RsInstrument.xml
+C:\Users\80400197\source\repos\AutomaçãoRadios\AutomaçãoRadios\obj\Debug\AutomaçãoRadios.csproj.AssemblyReference.cache
+C:\Users\80400197\source\repos\AutomaçãoRadios\AutomaçãoRadios\obj\Debug\AutomaçãoRadios.csproj.CoreCompileInputs.cache
+C:\Users\80400197\source\repos\AutomaçãoRadios\AutomaçãoRadios\obj\Debug\AutomaçãoRadios.csproj.CopyComplete
+C:\Users\80400197\source\repos\AutomaçãoRadios\AutomaçãoRadios\obj\Debug\AutomaçãoRadios.exe
+C:\Users\80400197\source\repos\AutomaçãoRadios\AutomaçãoRadios\obj\Debug\AutomaçãoRadios.pdb
