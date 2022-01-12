@@ -59,7 +59,7 @@ namespace RsInstrument_FSW_Example
             for (int i = 0; i < 4; i++)
             {
 
-                //instr.WriteString("*RST;*CLS"); // Reinicialize o instrumento, limpe a fila de erros
+                instr.WriteString("*RST;*CLS"); // Reinicialize o instrumento, limpe a fila de erros
                 instr.WriteString("INST:SEL MREC"); //Configura o Analisador para o Spectrum mode
                 instr.WriteString("INIT:CONT ON"); // Desliga a varredura contínua
                 instr.WriteString("SYST:DISP:UPD ON"); // Display update ON - Desligar após a depuração
@@ -111,10 +111,10 @@ namespace RsInstrument_FSW_Example
             {
                 instr.WriteString("INST:SEL SAN"); //Configura o Analisador para o Spectrum mode
                 instr.WriteString("CALC:UNIT:POW DBM"); //Configura a unidade do reference Level
-                instr.WriteString("INP:ATT 35dB"); //Configura o ATT
-                instr.WriteString("DISP:TRAC:Y:RLEV 0dbm"); // Configura o Reference Level
+                instr.WriteString("INP:ATT 15dB"); //Configura o ATT
+                instr.WriteString("DISP:TRAC:Y:RLEV -20dbm"); // Configura o Reference Level
                 instr.WriteString($"FREQ:CENT {freqC[i]} MHz"); // Configura a Frequencia Central
-                instr.WriteString("FREQ:SPAN 150 KHz"); // Configura o span
+                instr.WriteString("FREQ:SPAN 120 KHz"); // Configura o span
                 instr.WriteString("BAND 1 kHz"); // Configura o RBW
                 instr.WriteString("BAND:VID 1 kHz"); // Configura o VBW
                 instr.WriteString("SWE:TIME:AUTO ON"); // Configura o sweep points
@@ -144,6 +144,18 @@ namespace RsInstrument_FSW_Example
                 Console.ReadKey();
 
             }
+        }
+
+        void espurio(RsInstrument instr)
+        {
+            instr.WriteString("HCOP:DEV:LANG WMF");
+            instr.WriteString($@"MMEM:NAME 'c:\temp\espurio1.WMF'");
+            instr.WriteString("HCOP:IMM"); // Faça a captura de tela
+            instr.QueryOpc(); // Espere a captura de tela ser salva
+            instr.File.FromInstrumentToPc($@"c:\temp\espurio1.WMF", $@"C:\Users\80400197\Desktop\Prints radio\espurio1.WMF"); // envia o arquivo do instrumento para o PC
+            Console.WriteLine(@"Arquivo de captura de tela salvo no PC");
+            Console.WriteLine("Pressione qualquer tecla para continuar");
+            Console.ReadKey();
         }
 
 
@@ -183,15 +195,16 @@ namespace RsInstrument_FSW_Example
                 Console.WriteLine($"Versão do drive do instrumento: {instr.Identification.DriverVersion}, Versao do nucleo: {instr.Identification.CoreVersion}");
                 instr.ClearStatus(); //Limpe os buffers de io do instrumento
                 Console.WriteLine($"String de identificação do instrumento:\n{instr.Identification.IdnString}");
-                instr.WriteString("*RST;*CLS"); // Reinicialize o instrumento, limpe a fila de erros
-                instr.WriteString("INIT:CONT ON"); // Desliga a varredura contínua
+                //instr.WriteString("*RST;*CLS"); // Reinicialize o instrumento, limpe a fila de erros
+                //instr.WriteString("INIT:CONT ON"); // Desliga a varredura contínua
                 instr.WriteString("SYST:DISP:UPD ON"); // Display update ON - Desligar após a depuração
                 //-----------------------------------------------------------
                 // Basic Settings:
                 //-----------------------------------------------------------
-                Radio.Potencia(instr, "148.41", "Potencia.csv", @"C:\Users\80400197\Desktop\Prints radio\674");
-                Radio.EstabilidadeFreq(instr, "148.41", "estabilidadeEfreq.csv", @"C:\Users\80400197\Desktop\Prints radio\674");
-                Radio.Mascara(instr, freqC);
+                //Radio.Potencia(instr, "148.41", "Potencia.csv", @"C:\Users\80400197\Desktop\Prints radio\674");
+                //Radio.EstabilidadeFreq(instr, "148.41", "estabilidadeEfreq.csv", @"C:\Users\80400197\Desktop\Prints radio\674");
+                //Radio.Mascara(instr, freqC);
+                Radio.espurio(instr);
                 
 
                 
