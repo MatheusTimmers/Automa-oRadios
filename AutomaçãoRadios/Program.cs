@@ -107,14 +107,14 @@ namespace RsInstrument_FSW_Example
 
         void Mascara(RsInstrument instr, string[] freqC)
         {
-            for (int i = 0; i < 21; i++)
+            for (int i = 0; i < 18; i++)
             {
                 instr.WriteString("INST:SEL SAN"); //Configura o Analisador para o Spectrum mode
                 instr.WriteString("CALC:UNIT:POW DBM"); //Configura a unidade do reference Level
                 instr.WriteString("INP:ATT 15dB"); //Configura o ATT
                 instr.WriteString("DISP:TRAC:Y:RLEV -20dbm"); // Configura o Reference Level
                 instr.WriteString($"FREQ:CENT {freqC[i]} MHz"); // Configura a Frequencia Central
-                instr.WriteString("FREQ:SPAN 120 KHz"); // Configura o span
+                instr.WriteString("FREQ:SPAN 80 KHz"); // Configura o span
                 instr.WriteString("BAND 1 kHz"); // Configura o RBW
                 instr.WriteString("BAND:VID 1 kHz"); // Configura o VBW
                 instr.WriteString("SWE:TIME:AUTO ON"); // Configura o sweep points
@@ -135,10 +135,10 @@ namespace RsInstrument_FSW_Example
                 // -----------------------------------------------------------
                 Thread.Sleep(5000);
                 instr.WriteString("HCOP:DEV:LANG WMF");
-                instr.WriteString($@"MMEM:NAME 'c:\temp\print{i}.WMF'");
+                instr.WriteString($@"MMEM:NAME 'c:\temp\print{i+21}.WMF'");
                 instr.WriteString("HCOP:IMM"); // Faça a captura de tela
                 instr.QueryOpc(); // Espere a captura de tela ser salva
-                instr.File.FromInstrumentToPc($@"c:\temp\print{i}.WMF", $@"C:\Users\80400197\Desktop\Prints radio\print{i}.WMF"); // envia o arquivo do instrumento para o PC
+                instr.File.FromInstrumentToPc($@"c:\temp\print{i+21}.WMF", $@"C:\Users\80400197\Desktop\Prints radio\print{i+21}.WMF"); // envia o arquivo do instrumento para o PC
                 Console.WriteLine(@"Arquivo de captura de tela salvo no PC");
                 Console.WriteLine("Pressione qualquer tecla para continuar");
                 Console.ReadKey();
@@ -166,8 +166,10 @@ namespace RsInstrument_FSW_Example
             RsInstrument instr; //Cria o Objeto instr como classe RsInstrument
             RsInstrument.AssertMinVersion("1.10.1");
             //Inicia as variaveis do marker, com valores padrao para entrar no While
-            string[] freqC = {"148.41", "159.41", "173.95", "148.01", "152.61", "148.21", "152.81", "148.39", "152.99", "149.01", "153.61", "149.43", "154.03", "149.89", "154.49", "164.61", "169.21", "165.09", "169.69", "165.59", "170.19", "157.45875", "162.05875", "158.42125", "163.02125", "159,39625", "163.99625", "157.45625", "162.05625", "158.41875", "163.01875", "163.01875", "163.99375", "157.45625", "162.05625", "167.38125","171.98125", "169.18125", "173.78125"};
-            
+            string[] freqC = {"157.45875", "162.05875", "158.42125", "163.02125", "159.39625", "163.99625", "157.45625", "162.05625", "158.41875", "163.01875", "159.39375", "163.99375", "157.45625", "162.05625", "167.38125", "171.98125", "169.18125", "173.78125" };
+            //"148.41", "159.41", "173.95", "148.01", "152.61", "148.21", "152.81", "148.39", "152.99", "149.01", "153.61", "149.43", "154.03", "149.89", "154.49", "164.61", "169.21", "165.09", "169.69", "165.59", "170.19", 
+
+
 
             try // Criar um Try-catch separado para inicialização impede o acesso a objetos não inicializados
             {
@@ -196,15 +198,15 @@ namespace RsInstrument_FSW_Example
                 instr.ClearStatus(); //Limpe os buffers de io do instrumento
                 Console.WriteLine($"String de identificação do instrumento:\n{instr.Identification.IdnString}");
                 //instr.WriteString("*RST;*CLS"); // Reinicialize o instrumento, limpe a fila de erros
-                //instr.WriteString("INIT:CONT ON"); // Desliga a varredura contínua
+                instr.WriteString("INIT:CONT ON"); // Desliga a varredura contínua
                 instr.WriteString("SYST:DISP:UPD ON"); // Display update ON - Desligar após a depuração
                 //-----------------------------------------------------------
                 // Basic Settings:
                 //-----------------------------------------------------------
                 //Radio.Potencia(instr, "148.41", "Potencia.csv", @"C:\Users\80400197\Desktop\Prints radio\674");
                 //Radio.EstabilidadeFreq(instr, "148.41", "estabilidadeEfreq.csv", @"C:\Users\80400197\Desktop\Prints radio\674");
-                //Radio.Mascara(instr, freqC);
-                Radio.espurio(instr);
+                Radio.Mascara(instr, freqC);
+                //Radio.espurio(instr);
                 
 
                 
