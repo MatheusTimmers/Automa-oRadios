@@ -70,7 +70,7 @@ namespace RsInstrument_FSW_Example
                 // -----------------------------------------------------------
                 // SyncPoint 'SettingsApplied' - todas as configurações foram aplicadas
                 // -----------------------------------------------------------
-                instr.VisaTimeout = 2000; // tempo limite de varredura - defina ele mais alto do que o tempo de aquisição do instrumento
+                instr.VisaTimeout = 3000; // tempo limite de varredura - defina ele mais alto do que o tempo de aquisição do instrumento
                 instr.WriteString("INIT"); // Comece a varredura
                 instr.QueryOpc(); // Usando * OPC? consulta espera até que o instrumento termine a aquisição
                 string estabilidadeFreq = instr.QueryString("CALC:MARK:FUNC:ADEM:FERR?");
@@ -107,7 +107,7 @@ namespace RsInstrument_FSW_Example
 
         void Mascara(RsInstrument instr, string[] freqC)
         {
-            for (int i = 0; i < 18; i++)
+            for (int i = 0; i < 3; i++)
             {
                 instr.WriteString("INST:SEL SAN"); //Configura o Analisador para o Spectrum mode
                 instr.WriteString("CALC:UNIT:POW DBM"); //Configura a unidade do reference Level
@@ -135,10 +135,10 @@ namespace RsInstrument_FSW_Example
                 // -----------------------------------------------------------
                 Thread.Sleep(5000);
                 instr.WriteString("HCOP:DEV:LANG WMF");
-                instr.WriteString($@"MMEM:NAME 'c:\temp\print{i+21}.WMF'");
+                instr.WriteString($@"MMEM:NAME 'c:\temp\print{i}.WMF'");
                 instr.WriteString("HCOP:IMM"); // Faça a captura de tela
                 instr.QueryOpc(); // Espere a captura de tela ser salva
-                instr.File.FromInstrumentToPc($@"c:\temp\print{i+21}.WMF", $@"C:\Users\80400197\Desktop\Prints radio\print{i+21}.WMF"); // envia o arquivo do instrumento para o PC
+                instr.File.FromInstrumentToPc($@"c:\temp\print{i}.WMF", $@"C:\Users\80400197\Desktop\Prints radio\61734-A\455 - Prints\print{i}.WMF"); // envia o arquivo do instrumento para o PC
                 Console.WriteLine(@"Arquivo de captura de tela salvo no PC");
                 Console.WriteLine("Pressione qualquer tecla para continuar");
                 Console.ReadKey();
@@ -166,9 +166,15 @@ namespace RsInstrument_FSW_Example
             RsInstrument instr; //Cria o Objeto instr como classe RsInstrument
             RsInstrument.AssertMinVersion("1.10.1");
             //Inicia as variaveis do marker, com valores padrao para entrar no While
-            string[] freqC = {"157.45875", "162.05875", "158.42125", "163.02125", "159.39625", "163.99625", "157.45625", "162.05625", "158.41875", "163.01875", "159.39375", "163.99375", "157.45625", "162.05625", "167.38125", "171.98125", "169.18125", "173.78125" };
-            //"148.41", "159.41", "173.95", "148.01", "152.61", "148.21", "152.81", "148.39", "152.99", "149.01", "153.61", "149.43", "154.03", "149.89", "154.49", "164.61", "169.21", "165.09", "169.69", "165.59", "170.19", 
+            string[] freqC20_674 = { "148.41", "159.41", "173.95", "148.01", "152.61", "148.21", "152.81", "148.39", "152.99", "149.01", "153.61", "149.43", "154.03", "149.89", "154.49", "164.61", "169.21", "165.09", "169.69", "165.59", "170.19" };
+            string[] freqC12_674 = {"157.45875", "162.05875", "158.42125", "163.02125", "159.39625", "163.99625", "157.45625", "162.05625", "158.41875", "163.01875", "159.39375", "163.99375", "157.45625", "162.05625", "167.38125", "171.98125", "169.18125", "173.78125" };
 
+            string[] freqC12_169 = { "406.10625", "423.05625", "410.00625", "426.95625", "412.74375", "429.69375"};
+            string[] freqC25_169 = { "406.1125", "423.0625", "410.0125", "426.9625", "412.7375", "429.6875" };
+
+            string[] freqC25_558 = {"457.525", "458.0000", "459.9875", "467.55", "468.0000", "469.9875"};
+
+            string[] freqC25_455 = { "465.0125", "466.0000", "467.0000"};
 
 
             try // Criar um Try-catch separado para inicialização impede o acesso a objetos não inicializados
@@ -203,9 +209,9 @@ namespace RsInstrument_FSW_Example
                 //-----------------------------------------------------------
                 // Basic Settings:
                 //-----------------------------------------------------------
-                //Radio.Potencia(instr, "148.41", "Potencia.csv", @"C:\Users\80400197\Desktop\Prints radio\674");
-                //Radio.EstabilidadeFreq(instr, "148.41", "estabilidadeEfreq.csv", @"C:\Users\80400197\Desktop\Prints radio\674");
-                Radio.Mascara(instr, freqC);
+                Radio.Potencia(instr, "406.106250", "Potencia.csv", @"C:\Users\80400197\Desktop\Prints radio\61735-A\169");
+                Radio.EstabilidadeFreq(instr, "406.106250", "estabilidadeEfreq.csv", @"C:\Users\80400197\Desktop\Prints radio\61735-A\169");
+                //Radio.Mascara(instr, freqC25_455);
                 //Radio.espurio(instr);
                 
 
